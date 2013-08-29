@@ -1,4 +1,5 @@
 ﻿Imports rsctrl.system
+Imports Renci.SshNet
 
 Public Class frmMain
     Dim con As New clsConnection("banncity.de", 8080, "ryg", "Skymaster2")
@@ -6,10 +7,10 @@ Public Class frmMain
     Private Sub cmdConnect_Click(sender As Object, e As EventArgs) Handles cmdConnect.Click
         If con.Connect = True Then
             tmrTick.Enabled = True
-            MsgBox("YAY")
+            lblConState.Text = "Connected"
         Else
             tmrTick.Enabled = False
-            MsgBox("NOPE")
+            lblConState.Text = "Disconnected"
         End If
     End Sub
 
@@ -18,7 +19,7 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        lblConState.Text = "Disconnected"
     End Sub
 
     Public Sub UpdateSystemStatus(msg As ResponseSystemStatus)

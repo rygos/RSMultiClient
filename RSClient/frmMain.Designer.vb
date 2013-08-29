@@ -29,6 +29,7 @@ Partial Class frmMain
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.tmrTick = New System.Windows.Forms.Timer(Me.components)
         Me.cmdTest = New System.Windows.Forms.Button()
+        Me.lblConState = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.SuspendLayout()
@@ -45,6 +46,7 @@ Partial Class frmMain
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.lblConState)
         Me.TabPage1.Controls.Add(Me.cmdTest)
         Me.TabPage1.Controls.Add(Me.cmdConnect)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
@@ -57,7 +59,7 @@ Partial Class frmMain
         '
         'cmdConnect
         '
-        Me.cmdConnect.Location = New System.Drawing.Point(68, 124)
+        Me.cmdConnect.Location = New System.Drawing.Point(6, 140)
         Me.cmdConnect.Name = "cmdConnect"
         Me.cmdConnect.Size = New System.Drawing.Size(75, 23)
         Me.cmdConnect.TabIndex = 0
@@ -80,12 +82,21 @@ Partial Class frmMain
         '
         'cmdTest
         '
-        Me.cmdTest.Location = New System.Drawing.Point(198, 222)
+        Me.cmdTest.Location = New System.Drawing.Point(539, 364)
         Me.cmdTest.Name = "cmdTest"
         Me.cmdTest.Size = New System.Drawing.Size(75, 23)
         Me.cmdTest.TabIndex = 1
         Me.cmdTest.Text = "Test"
         Me.cmdTest.UseVisualStyleBackColor = True
+        '
+        'lblConState
+        '
+        Me.lblConState.AutoSize = True
+        Me.lblConState.Location = New System.Drawing.Point(6, 124)
+        Me.lblConState.Name = "lblConState"
+        Me.lblConState.Size = New System.Drawing.Size(48, 13)
+        Me.lblConState.TabIndex = 2
+        Me.lblConState.Text = "constate"
         '
         'frmMain
         '
@@ -97,6 +108,7 @@ Partial Class frmMain
         Me.Text = "Form1"
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
+        Me.TabPage1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -105,6 +117,7 @@ Partial Class frmMain
     Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
     Friend WithEvents tmrTick As System.Windows.Forms.Timer
     Friend WithEvents cmdConnect As System.Windows.Forms.Button
+    Friend WithEvents lblConState As System.Windows.Forms.Label
     Friend WithEvents cmdTest As System.Windows.Forms.Button
 
 End Class

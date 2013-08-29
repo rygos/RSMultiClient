@@ -1,19 +1,19 @@
 ﻿
-Imports System.Collections.Generic
-Imports System.Windows.Forms
+'Imports System.Collections.Generic
+'Imports System.Windows.Forms
 Imports System.Text.RegularExpressions
-Imports System.IO
+'Imports System.IO
 
 Imports Sehraf.RSRPC
 
-Imports rsctrl.chat
+'Imports rsctrl.chat
 Imports rsctrl.core
-Imports rsctrl.files
+'Imports rsctrl.files
 'using rsctrl.gxs;
 'using rsctrl.msgs;
-Imports rsctrl.peers
-Imports rsctrl.search
-Imports rsctrl.stream
+'Imports rsctrl.peers
+'Imports rsctrl.search
+'Imports rsctrl.stream
 Imports rsctrl.system
 
 Friend Class clsProcessor
