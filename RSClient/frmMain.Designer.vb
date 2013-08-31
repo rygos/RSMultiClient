@@ -26,6 +26,7 @@ Partial Class frmMain
         Me.tcMain = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.lblPeersSum = New System.Windows.Forms.Label()
         Me.lblStatDown = New System.Windows.Forms.Label()
         Me.lblStatUpload = New System.Windows.Forms.Label()
@@ -47,12 +48,13 @@ Partial Class frmMain
         Me.txtLoginHost = New System.Windows.Forms.TextBox()
         Me.cmdTest = New System.Windows.Forms.Button()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.tmrTick = New System.Windows.Forms.Timer(Me.components)
-        Me.Label8 = New System.Windows.Forms.Label()
         Me.lvDownList = New System.Windows.Forms.ListView()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader2 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.ColumnHeader3 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.tmrTick = New System.Windows.Forms.Timer(Me.components)
+        Me.ColumnHeader4 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader5 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.tcMain.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -100,6 +102,15 @@ Partial Class frmMain
         Me.GroupBox2.TabIndex = 3
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "System Informations"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(141, 48)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(16, 13)
+        Me.Label8.TabIndex = 9
+        Me.Label8.Text = "of"
         '
         'lblPeersSum
         '
@@ -250,6 +261,7 @@ Partial Class frmMain
         '
         Me.txtLoginPass.Location = New System.Drawing.Point(94, 97)
         Me.txtLoginPass.Name = "txtLoginPass"
+        Me.txtLoginPass.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtLoginPass.Size = New System.Drawing.Size(100, 20)
         Me.txtLoginPass.TabIndex = 3
         '
@@ -294,22 +306,9 @@ Partial Class frmMain
         Me.TabPage2.Text = "Files"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
-        'tmrTick
-        '
-        Me.tmrTick.Interval = 1000
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(141, 48)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(16, 13)
-        Me.Label8.TabIndex = 9
-        Me.Label8.Text = "of"
-        '
         'lvDownList
         '
-        Me.lvDownList.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3})
+        Me.lvDownList.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1, Me.ColumnHeader2, Me.ColumnHeader3, Me.ColumnHeader4, Me.ColumnHeader5})
         Me.lvDownList.Location = New System.Drawing.Point(6, 6)
         Me.lvDownList.Name = "lvDownList"
         Me.lvDownList.Size = New System.Drawing.Size(608, 381)
@@ -320,14 +319,31 @@ Partial Class frmMain
         'ColumnHeader1
         '
         Me.ColumnHeader1.Text = "Filename"
+        Me.ColumnHeader1.Width = 152
         '
         'ColumnHeader2
         '
         Me.ColumnHeader2.Text = "Filesize"
+        Me.ColumnHeader2.Width = 82
         '
         'ColumnHeader3
         '
         Me.ColumnHeader3.Text = "State"
+        Me.ColumnHeader3.Width = 85
+        '
+        'tmrTick
+        '
+        Me.tmrTick.Interval = 1000
+        '
+        'ColumnHeader4
+        '
+        Me.ColumnHeader4.Text = "Rate (KiB/s)"
+        Me.ColumnHeader4.Width = 84
+        '
+        'ColumnHeader5
+        '
+        Me.ColumnHeader5.Text = "Hash"
+        Me.ColumnHeader5.Width = 169
         '
         'frmMain
         '
@@ -377,5 +393,7 @@ Partial Class frmMain
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader3 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader4 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader5 As System.Windows.Forms.ColumnHeader
 
 End Class

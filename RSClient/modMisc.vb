@@ -1,7 +1,7 @@
 ﻿Module modMisc
     Public Function FormatBytes(ByVal dblbytes As Double, Optional ByVal strFormated As String = "0.00") As String
-        Dim arrPosForm() As String = {"Bytes", "Kilobyte", "Megabyte", "Gigabyte", _
-            "Terabyte", "Petabyte", "Exabyte", "Zettabyte", "Yottabyte"}
+        Dim arrPosForm() As String = {"B", "KiB", "MiB", "GiB", _
+            "TiB", "PiB", "ExiB", "ZiB", "YiB"}
         For i As Integer = arrPosForm.Length - 1 To 0 Step -1
             If dblbytes > 1024 ^ i Then
                 dblbytes /= 1024 ^ i
@@ -25,6 +25,27 @@
         Next i
 
         Return dblbytes.ToString(strFormated) & " Bytes"
+    End Function
+
+    Public Function FileState2String(FileStateID As Integer) As String
+        Select Case FileStateID
+            Case 1
+                Return "Failed"
+            Case 2
+                Return "Okay"
+            Case 3
+                Return "Paused"
+            Case 4
+                Return "Queued"
+            Case 5
+                Return "Waiting"
+            Case 6
+                Return "Downloading"
+            Case 7
+                Return "Checking Hash"
+            Case 8
+                Return "Complete"
+        End Select
     End Function
 
     Public Function NetStatus2String(netStatusID As UInteger) As String

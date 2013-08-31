@@ -68,7 +68,7 @@ Public Class frmMain
                     lvDownList.SuspendLayout()
                     lvDownList.Items.Clear()
                     For Each item In con.TransferListData.transfers
-                        lvwAddItem(lvDownList, item.file.name, item.file.size, item.state)
+                        lvwAddItem(lvDownList, item.file.name, FormatBytes(item.file.size), FileState2String(item.state), FormatBytesPerSec(item.rate_kBs * 1024), item.file.hash)
                     Next
                     lvDownList.ResumeLayout()
             End Select
