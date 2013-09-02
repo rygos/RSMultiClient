@@ -1,4 +1,6 @@
 ﻿Imports Sehraf.RSRPC
+Imports rsctrl.files
+
 Public Class process
     Public _rpc As New Sehraf.RSRPC.RSRPC(False)
 
@@ -9,6 +11,7 @@ Public Class process
     'Files
     Public TransferDLListData As rsctrl.files.ResponseTransferList
     Public TransferULListData As rsctrl.files.ResponseTransferList
+    Private TransferListDirection As rsctrl.files.Direction
     'Chat
     Public ChatHistoryData As rsctrl.chat.ResponseChatHistory
     Public ChatLobbiesData As rsctrl.chat.ResponseChatLobbies
@@ -30,10 +33,12 @@ Public Class process
     End Function
 
     Public Function GetTransferDLList() As UInteger
+        TransferListDirection = rsctrl.files.Direction.DIRECTION_DOWNLOAD
         Return _rpc.FilesGetTransferList(rsctrl.files.Direction.DIRECTION_DOWNLOAD)
     End Function
 
     Public Function GetTransferULList() As UInteger
+        TransferListDirection = rsctrl.files.Direction.DIRECTION_UPLOAD
         Return _rpc.FilesGetTransferList(rsctrl.files.Direction.DIRECTION_UPLOAD)
     End Function
 
@@ -119,8 +124,11 @@ Public Class process
             Case CUShort(rsctrl.core.PackageId.FILES) 'Files
                 Select Case submsg
                     Case CByte(rsctrl.files.ResponseMsgIds.MsgId_ResponseTransferList) 'Files - Transferlist
-                        TransferDLListData = GetTransferDLListData(msg)
-                        TransferULListData = GetTransferULListData(msg)
+                        If TransferListDirection = Direction.DIRECTION_DOWNLOAD Then 'Files - Transferlist - Download
+                            TransferDLListData = GetTransferDLListData(msg)
+                        Else  'Files - Transferlist - Upload
+                            TransferULListData = GetTransferULListData(msg)
+                        End If
                 End Select
 
             Case CUShort(rsctrl.core.PackageId.STREAM) 'Stream
