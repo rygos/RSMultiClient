@@ -1,4 +1,8 @@
 ﻿Module modMisc
+    Public Function wCap() As String
+        Return Application.ProductName & " - " & Application.ProductVersion
+    End Function
+
     Public Function FormatBytes(ByVal dblbytes As Double, Optional ByVal strFormated As String = "0.00") As String
         Dim arrPosForm() As String = {"B", "KiB", "MiB", "GiB", _
             "TiB", "PiB", "ExiB", "ZiB", "YiB"}

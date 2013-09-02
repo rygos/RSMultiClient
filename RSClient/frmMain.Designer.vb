@@ -444,6 +444,9 @@ Partial Class frmMain
         '
         'dgvDownloads
         '
+        Me.dgvDownloads.AllowUserToAddRows = False
+        Me.dgvDownloads.AllowUserToDeleteRows = False
+        Me.dgvDownloads.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgvDownloads.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvDownloads.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colFileName, Me.colFileSize, Me.colFinished, Me.colRate, Me.colState, Me.colHash})
         Me.dgvDownloads.Location = New System.Drawing.Point(3, 3)
@@ -456,33 +459,38 @@ Partial Class frmMain
         '
         Me.colFileName.HeaderText = "Filename"
         Me.colFileName.Name = "colFileName"
-        Me.colFileName.Width = 200
+        Me.colFileName.Width = 74
         '
         'colFileSize
         '
         Me.colFileSize.HeaderText = "Filesize"
         Me.colFileSize.Name = "colFileSize"
+        Me.colFileSize.Width = 66
         '
         'colFinished
         '
         Me.colFinished.HeaderText = "Finished"
         Me.colFinished.Name = "colFinished"
+        Me.colFinished.Width = 71
         '
         'colRate
         '
         Me.colRate.HeaderText = "Rate (KiB/s)"
         Me.colRate.Name = "colRate"
         Me.colRate.ReadOnly = True
+        Me.colRate.Width = 90
         '
         'colState
         '
         Me.colState.HeaderText = "State"
         Me.colState.Name = "colState"
+        Me.colState.Width = 57
         '
         'colHash
         '
         Me.colHash.HeaderText = "Hash"
         Me.colHash.Name = "colHash"
+        Me.colHash.Width = 57
         '
         'TabPage3
         '
@@ -496,6 +504,9 @@ Partial Class frmMain
         '
         'dgvUploads
         '
+        Me.dgvUploads.AllowUserToAddRows = False
+        Me.dgvUploads.AllowUserToDeleteRows = False
+        Me.dgvUploads.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.dgvUploads.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvUploads.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6})
         Me.dgvUploads.Location = New System.Drawing.Point(3, 3)
@@ -508,33 +519,38 @@ Partial Class frmMain
         '
         Me.DataGridViewTextBoxColumn1.HeaderText = "Filename"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.Width = 200
+        Me.DataGridViewTextBoxColumn1.Width = 74
         '
         'DataGridViewTextBoxColumn2
         '
         Me.DataGridViewTextBoxColumn2.HeaderText = "Filesize"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.Width = 66
         '
         'DataGridViewTextBoxColumn3
         '
         Me.DataGridViewTextBoxColumn3.HeaderText = "Finished"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.Width = 71
         '
         'DataGridViewTextBoxColumn4
         '
         Me.DataGridViewTextBoxColumn4.HeaderText = "Rate (KiB/s)"
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
         Me.DataGridViewTextBoxColumn4.ReadOnly = True
+        Me.DataGridViewTextBoxColumn4.Width = 90
         '
         'DataGridViewTextBoxColumn5
         '
         Me.DataGridViewTextBoxColumn5.HeaderText = "State"
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.Width = 57
         '
         'DataGridViewTextBoxColumn6
         '
         Me.DataGridViewTextBoxColumn6.HeaderText = "Hash"
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.Width = 57
         '
         'tmrTick
         '
