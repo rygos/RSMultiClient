@@ -78,8 +78,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsRSRCP.vb" />
-    <None Include="clsTest.vb" />
+    <Compile Include="process.vb" />
     <Compile Include="frmMain.vb">
       <SubType>Form</SubType>
     </Compile>

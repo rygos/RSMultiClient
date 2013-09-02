@@ -1,9 +1,20 @@
 ﻿Imports Sehraf.RSRPC
-Public Class clsRSRCP
+Public Class process
     Public _rpc As New Sehraf.RSRPC.RSRPC(False)
 
+    '############################
+    '# Collected Data Export
+    'System
     Public SystemStatusData As rsctrl.system.ResponseSystemStatus
-    Public TransferListData As rsctrl.files.ResponseTransferList
+    'Files
+    Public TransferDLListData As rsctrl.files.ResponseTransferList
+    Public TransferULListData As rsctrl.files.ResponseTransferList
+    'Chat
+    Public ChatHistoryData As rsctrl.chat.ResponseChatHistory
+    Public ChatLobbiesData As rsctrl.chat.ResponseChatLobbies
+    'Peers
+    Public PeersListData As rsctrl.peers.ResponsePeerList
+
 
     Private Structure strConInfo
         Dim Host As String
@@ -14,14 +25,17 @@ Public Class clsRSRCP
 
     Dim conInfo As strConInfo
 
-    Public Sub GetSystemStatus()
-        _rpc.SystemGetStatus()
-        'System.Threading.Thread.Sleep(1000)
-    End Sub
+    Public Function GetSystemStatus() As UInteger
+        Return _rpc.SystemGetStatus()
+    End Function
 
-    Public Sub GetTransferList()
-        _rpc.FilesGetTransferList(rsctrl.files.Direction.DIRECTION_DOWNLOAD)
-    End Sub
+    Public Function GetTransferDLList() As UInteger
+        Return _rpc.FilesGetTransferList(rsctrl.files.Direction.DIRECTION_DOWNLOAD)
+    End Function
+
+    Public Function GetTransferULList() As UInteger
+        Return _rpc.FilesGetTransferList(rsctrl.files.Direction.DIRECTION_UPLOAD)
+    End Function
 
     Public Sub New()
 
@@ -91,17 +105,25 @@ Public Class clsRSRCP
 
         ' check service
         Select Case service
-            Case CUShort(rsctrl.core.PackageId.PEERS)
+            Case CUShort(rsctrl.core.PackageId.PEERS) 'Peers
 
-            Case CUShort(rsctrl.core.PackageId.SYSTEM)
-                SystemStatusData = GetSystemStatusData(msg)
-            Case CUShort(rsctrl.core.PackageId.CHAT)
+            Case CUShort(rsctrl.core.PackageId.SYSTEM) 'system
+                Select Case submsg
+                    Case CByte(rsctrl.system.ResponseMsgIds.MsgId_ResponseSystemStatus) 'System - SystemStatus
+                        SystemStatusData = GetSystemStatusData(msg)
+                End Select
+            Case CUShort(rsctrl.core.PackageId.CHAT) 'Chat
 
-            Case CUShort(rsctrl.core.PackageId.SEARCH)
+            Case CUShort(rsctrl.core.PackageId.SEARCH) 'Search
 
-            Case CUShort(rsctrl.core.PackageId.FILES)
-                TransferListData = GetTransferListData(msg)
-            Case CUShort(rsctrl.core.PackageId.STREAM)
+            Case CUShort(rsctrl.core.PackageId.FILES) 'Files
+                Select Case submsg
+                    Case CByte(rsctrl.files.ResponseMsgIds.MsgId_ResponseTransferList) 'Files - Transferlist
+                        TransferDLListData = GetTransferDLListData(msg)
+                        TransferULListData = GetTransferULListData(msg)
+                End Select
+
+            Case CUShort(rsctrl.core.PackageId.STREAM) 'Stream
 
             Case Else
                 Return
@@ -109,7 +131,23 @@ Public Class clsRSRCP
 
     End Sub
 
-    Public Function GetTransferListData(msg As RSProtoBuffSSHMsg) As rsctrl.files.ResponseTransferList
+    Public Function GetTransferULListData(msg As RSProtoBuffSSHMsg) As rsctrl.files.ResponseTransferList
+        ' deserialize
+        Dim response As New rsctrl.files.ResponseTransferList()
+        Dim e As Exception = Nothing
+        If Not RSProtoBuf.Deserialize(Of rsctrl.files.ResponseTransferList)(msg.ProtoBuffMsg, response, e) Then
+            Debug.Print("ProcessSystemstatus: error deserializing " & e.Message)
+        End If
+
+        ' check if msg is good
+        If response.status Is Nothing OrElse response.status.code <> rsctrl.core.Status.StatusCode.SUCCESS Then
+            Return Nothing
+        End If
+
+        Return response
+    End Function
+
+    Public Function GetTransferDLListData(msg As RSProtoBuffSSHMsg) As rsctrl.files.ResponseTransferList
         ' deserialize
         Dim response As New rsctrl.files.ResponseTransferList()
         Dim e As Exception = Nothing

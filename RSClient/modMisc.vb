@@ -45,6 +45,8 @@
                 Return "Checking Hash"
             Case 8
                 Return "Complete"
+            Case Else
+                Return "oO - N/A State"
         End Select
     End Function
 
