@@ -81,6 +81,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="modSettings.vb" />
     <Compile Include="process.vb" />
     <Compile Include="frmMain.vb">
       <SubType>Form</SubType>

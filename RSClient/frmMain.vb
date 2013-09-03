@@ -16,15 +16,9 @@ Public Class frmMain
 
     Private Sub frmMain_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
         If chkAutoLogin.Checked = True Then
-            SaveSetting("RSMC", "Login", "host", txtLoginHost.Text)
-            SaveSetting("RSMC", "Login", "port", txtLoginPort.Text)
-            SaveSetting("RSMC", "Login", "user", txtLoginUser.Text)
-            SaveSetting("RSMC", "Login", "pass", txtLoginPass.Text)
+            OptionsSave()
         Else
-            SaveSetting("RSMC", "Login", "host", "")
-            SaveSetting("RSMC", "Login", "port", "")
-            SaveSetting("RSMC", "Login", "user", "")
-            SaveSetting("RSMC", "Login", "pass", "")
+            My.Settings("pass") = vbNullString
         End If
 
         con.Disconnect()
@@ -33,33 +27,71 @@ Public Class frmMain
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = wCap()
 
-        txtLoginHost.Text = GetSetting("RSMC", "Login", "host")
-        txtLoginPort.Text = GetSetting("RSMC", "Login", "port")
-        txtLoginUser.Text = GetSetting("RSMC", "Login", "user")
-        txtLoginPass.Text = GetSetting("RSMC", "Login", "pass")
+        OptionsLoad()
 
         Me.DoubleBuffered = True
+
+        AddHandler con.SystemStatusEvent, AddressOf RefreshGUISystemStatus
+        AddHandler con.TransferListDLEvent, AddressOf RefreshGUITLDL
+        AddHandler con.TransferListULEvent, AddressOf RefreshGUITLUL
+
+    End Sub
+
+    Private Sub RefreshGUITLDL()
+        'Transferlist Download
+        Try
+            Dim dlCachesCount As Integer
+            TLDirection = Direction.DIRECTION_DOWNLOAD
+            For Each item In con.TransferListData.transfers
+                UpdateFileTransfers(Direction.DIRECTION_DOWNLOAD, item.file.name, item.file.size, item.fraction, item.rate_kBs, item.state, item.file.hash)
+                If item.file.name = item.file.hash Then
+                    dlCachesCount = dlCachesCount + 1
+                End If
+            Next
+            DeleteOldFileTransfers(Direction.DIRECTION_DOWNLOAD)
+            lblDLCache.Text = dlCachesCount
+            lblDLCount.Text = con.TransferListData.transfers.Count
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub RefreshGUITLUL()
+        'Transferlist Upload
+        Try
+            Dim ulCachesCount As Integer
+            TLDirection = Direction.DIRECTION_UPLOAD
+            For Each item In con.TransferListData.transfers
+                UpdateFileTransfers(Direction.DIRECTION_UPLOAD, item.file.name, item.file.size, item.fraction, item.rate_kBs, item.state, item.file.hash)
+                If item.file.name = item.file.hash Then
+                    ulCachesCount = ulCachesCount + 1
+                End If
+            Next
+            DeleteOldFileTransfers(Direction.DIRECTION_UPLOAD)
+            lblULCaches.Text = ulCachesCount
+            lblULCount.Text = con.TransferListData.transfers.Count
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub RefreshGUISystemStatus()
+        'SystemStatus (Setup)
+        Me.Invoke(Sub() lblNetStatus.Text = NetStatus2String(con.SystemStatusData.net_status))
+        Me.Invoke(Sub() lblPeersConnected.Text = con.SystemStatusData.no_connected)
+        Me.Invoke(Sub() lblPeersSum.Text = con.SystemStatusData.no_peers)
+        Me.Invoke(Sub() lblStatDown.Text = FormatBytesPerSec(con.SystemStatusData.bw_total.down * 1024))
+        Me.Invoke(Sub() lblStatUpload.Text = FormatBytesPerSec(con.SystemStatusData.bw_total.up * 1024))
     End Sub
 
     Private Sub cmdConnect_Click(sender As Object, e As EventArgs) Handles cmdConnect.Click
-        If txtLoginHost.Text = vbNullString Or txtLoginPort.Text = vbNullString Or txtLoginPass.Text = vbNullString Or txtLoginUser.Text = vbNullString Then
-            MsgBox("Please enter all login informations.", MsgBoxStyle.Critical)
-            Exit Sub
-        End If
-
-        If chkAutoLogin.Checked = True Then
-            SaveSetting("RSMC", "Login", "host", txtLoginHost.Text)
-            SaveSetting("RSMC", "Login", "port", txtLoginPort.Text)
-            SaveSetting("RSMC", "Login", "user", txtLoginUser.Text)
-            SaveSetting("RSMC", "Login", "pass", txtLoginPass.Text)
-        Else
-            SaveSetting("RSMC", "Login", "host", "")
-            SaveSetting("RSMC", "Login", "port", "")
-            SaveSetting("RSMC", "Login", "user", "")
-            SaveSetting("RSMC", "Login", "pass", "")
-        End If
 
         If cmdConnect.Text = "Connect" Then
+            If txtLoginHost.Text = vbNullString Or txtLoginPort.Text = vbNullString Or txtLoginPass.Text = vbNullString Or txtLoginUser.Text = vbNullString Then
+                MsgBox("Please enter all login informations.", MsgBoxStyle.Critical)
+                Exit Sub
+            End If
+
             If con.Connect(txtLoginHost.Text, CUInt(txtLoginPort.Text), txtLoginUser.Text, txtLoginPass.Text) = True Then
                 lblStatus.BackColor = Color.Green
                 lblStatus.Text = "CONNECTED"
@@ -88,80 +120,18 @@ Public Class frmMain
     End Sub
 
     Private Sub tmrTick_Tick(sender As Object, e As EventArgs) Handles tmrTick.Tick
-
-        Select Case tcMain.SelectedIndex
-            Case Is = 0
-                Try
-                    If con.GetSystemStatus() = 1 Then
-                        tslblSysS.BackColor = Color.Green
-                    Else
-                        tslblSysS.BackColor = Color.Red
-                    End If
-
-                    lblNetStatus.Text = NetStatus2String(con.SystemStatusData.net_status)
-                    lblPeersConnected.Text = con.SystemStatusData.no_connected
-                    lblPeersSum.Text = con.SystemStatusData.no_peers
-                    lblStatDown.Text = FormatBytesPerSec(con.SystemStatusData.bw_total.down * 1024)
-                    lblStatUpload.Text = FormatBytesPerSec(con.SystemStatusData.bw_total.up * 1024)
-
-
-                Catch ex As Exception
-                    tslblSysS.BackColor = Color.Red
-                End Try
-            Case Is = 1
-                Try
-                    If con.GetTransferDLList() = 1 Then
-                        tslblTLDL.BackColor = Color.Green
-                    Else
-                        tslblTLDL.BackColor = Color.Red
-                    End If
-                    Dim dlCachesCount As Integer
-                    TLDirection = Direction.DIRECTION_DOWNLOAD
-                    For Each item In con.TransferDLListData.transfers
-                        UpdateFileTransfers(Direction.DIRECTION_DOWNLOAD, item.file.name, item.file.size, item.fraction, item.rate_kBs, item.state, item.file.hash)
-                        If item.file.name = item.file.hash Then
-                            dlCachesCount = dlCachesCount + 1
-                        End If
-                    Next
-                    DeleteOldFileTransfers(Direction.DIRECTION_DOWNLOAD)
-                    lblDLCache.Text = dlCachesCount
-                    lblDLCount.Text = con.TransferDLListData.transfers.Count
-
-                Catch ex As Exception
-                    tslblTLDL.BackColor = Color.Red
-                End Try
-            Case Is = 2
-                Try
-                    If con.GetTransferULList() = 1 Then
-                        tslblTLUL.BackColor = Color.Green
-                    Else
-                        tslblTLUL.BackColor = Color.Red
-                    End If
-                    Dim ulCachesCount As Integer
-                    TLDirection = Direction.DIRECTION_UPLOAD
-                    For Each item In con.TransferULListData.transfers
-                        UpdateFileTransfers(Direction.DIRECTION_UPLOAD, item.file.name, item.file.size, item.fraction, item.rate_kBs, item.state, item.file.hash)
-                        If item.file.name = item.file.hash Then
-                            ulCachesCount = ulCachesCount + 1
-                        End If
-                    Next
-                    DeleteOldFileTransfers(Direction.DIRECTION_UPLOAD)
-                    lblULCaches.Text = ulCachesCount
-                    lblULCount.Text = con.TransferULListData.transfers.Count
-                Catch ex As Exception
-                    tslblTLUL.BackColor = Color.Red
-                End Try
-        End Select
-
+        con.GetSystemStatus()
+        con.GetTransferDLList()
+        con.GetTransferULList()
     End Sub
 
     Private Sub UpdateFileTransfers(Direction As Direction, filename As String, filesize As ULong, filefraction As Single, filerate As Single, filestate As UInteger, filehash As String)
 
-        'Add new  Rows
         If Direction = rsctrl.files.Direction.DIRECTION_DOWNLOAD Then
             Dim tCount As Integer = 0
             For i = 0 To dgvDownloads.Rows.Count - 1
                 If filehash = dgvDownloads.Rows(i).Cells(5).Value Then
+                    'Row Exists - Update Cells
                     dgvDownloads.Rows(i).Cells(2).Value = FormatPercent(filefraction, 1)
                     dgvDownloads.Rows(i).Cells(3).Value = FormatBytesPerSec(filerate * 1024)
                     dgvDownloads.Rows(i).Cells(4).Value = FileState2String(filestate)
@@ -169,6 +139,7 @@ Public Class frmMain
                 End If
             Next
             If tCount = 0 Then
+                'row does not exist, add row.
                 dgvDownloads.Rows.Add(filename, FormatBytes(filesize), FormatPercent(filefraction, 1), FormatBytesPerSec(filerate * 1024), FileState2String(filestate), filehash)
             End If
         Else
@@ -192,7 +163,7 @@ Public Class frmMain
 
             For i = 0 To dgvDownloads.Rows.Count - 1
                 Dim tCount As Integer = 0
-                For Each item In con.TransferDLListData.transfers
+                For Each item In con.TransferListData.transfers
                     If item.file.hash = dgvDownloads.Rows(i).Cells(5).Value Then
                         tCount = tCount + 1
                     End If
@@ -206,7 +177,7 @@ Public Class frmMain
 
             For i = 0 To dgvUploads.Rows.Count - 1
                 Dim tCount As Integer = 0
-                For Each item In con.TransferULListData.transfers
+                For Each item In con.TransferListData.transfers
                     If item.file.hash = dgvUploads.Rows(i).Cells(5).Value Then
                         tCount = tCount + 1
                     End If
@@ -219,4 +190,7 @@ Public Class frmMain
         End If
     End Sub
 
+    Private Sub cmdTest_Click(sender As Object, e As EventArgs) Handles cmdTest.Click
+        OptionsLoad()
+    End Sub
 End Class
