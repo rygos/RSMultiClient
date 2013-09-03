@@ -49,8 +49,8 @@ Public Class frmMain
                 End If
             Next
             DeleteOldFileTransfers(Direction.DIRECTION_DOWNLOAD)
-            lblDLCache.Text = dlCachesCount
-            lblDLCount.Text = con.TransferListData.transfers.Count
+            Me.Invoke(Sub() lblDLCache.Text = dlCachesCount)
+            Me.Invoke(Sub() lblDLCount.Text = con.TransferListData.transfers.Count)
         Catch ex As Exception
 
         End Try
@@ -68,8 +68,8 @@ Public Class frmMain
                 End If
             Next
             DeleteOldFileTransfers(Direction.DIRECTION_UPLOAD)
-            lblULCaches.Text = ulCachesCount
-            lblULCount.Text = con.TransferListData.transfers.Count
+            Me.Invoke(Sub() lblULCaches.Text = ulCachesCount)
+            Me.Invoke(Sub() lblULCount.Text = con.TransferListData.transfers.Count)
         Catch ex As Exception
 
         End Try
