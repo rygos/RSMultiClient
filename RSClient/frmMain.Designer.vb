@@ -56,23 +56,15 @@ Partial Class frmMain
         Me.txtLoginUser = New System.Windows.Forms.TextBox()
         Me.txtLoginPort = New System.Windows.Forms.TextBox()
         Me.txtLoginHost = New System.Windows.Forms.TextBox()
-        Me.cmdTest = New System.Windows.Forms.Button()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
-        Me.dgvDownloads = New System.Windows.Forms.DataGridView()
-        Me.colFileName = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colFileSize = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colFinished = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colRate = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colState = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colHash = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.lvTLDL = New System.Windows.Forms.ListView()
+        Me.ColumnHeader6 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader7 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader8 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader9 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader10 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader11 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.dgvUploads = New System.Windows.Forms.DataGridView()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.tmrTick = New System.Windows.Forms.Timer(Me.components)
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
         Me.ColumnHeader1 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
@@ -84,15 +76,21 @@ Partial Class frmMain
         Me.tslblSysS = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tslblTLDL = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tslblTLUL = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.lvTLUL = New System.Windows.Forms.ListView()
+        Me.ColumnHeader12 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader13 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader14 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader15 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader16 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.ColumnHeader17 = CType(New System.Windows.Forms.ColumnHeader(), System.Windows.Forms.ColumnHeader)
+        Me.cmdTest = New System.Windows.Forms.Button()
         Me.tcMain.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
-        CType(Me.dgvDownloads, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
-        CType(Me.dgvUploads, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -112,7 +110,6 @@ Partial Class frmMain
         Me.TabPage1.Controls.Add(Me.GroupBox3)
         Me.TabPage1.Controls.Add(Me.GroupBox2)
         Me.TabPage1.Controls.Add(Me.GroupBox1)
-        Me.TabPage1.Controls.Add(Me.cmdTest)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
@@ -422,18 +419,9 @@ Partial Class frmMain
         Me.txtLoginHost.Size = New System.Drawing.Size(100, 20)
         Me.txtLoginHost.TabIndex = 0
         '
-        'cmdTest
-        '
-        Me.cmdTest.Location = New System.Drawing.Point(677, 469)
-        Me.cmdTest.Name = "cmdTest"
-        Me.cmdTest.Size = New System.Drawing.Size(75, 23)
-        Me.cmdTest.TabIndex = 1
-        Me.cmdTest.Text = "Test"
-        Me.cmdTest.UseVisualStyleBackColor = True
-        '
         'TabPage2
         '
-        Me.TabPage2.Controls.Add(Me.dgvDownloads)
+        Me.TabPage2.Controls.Add(Me.lvTLDL)
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
@@ -442,115 +430,51 @@ Partial Class frmMain
         Me.TabPage2.Text = "FileDownloads"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
-        'dgvDownloads
+        'lvTLDL
         '
-        Me.dgvDownloads.AllowUserToAddRows = False
-        Me.dgvDownloads.AllowUserToDeleteRows = False
-        Me.dgvDownloads.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
-        Me.dgvDownloads.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvDownloads.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colFileName, Me.colFileSize, Me.colFinished, Me.colRate, Me.colState, Me.colHash})
-        Me.dgvDownloads.Location = New System.Drawing.Point(3, 3)
-        Me.dgvDownloads.MultiSelect = False
-        Me.dgvDownloads.Name = "dgvDownloads"
-        Me.dgvDownloads.Size = New System.Drawing.Size(810, 450)
-        Me.dgvDownloads.TabIndex = 0
+        Me.lvTLDL.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader6, Me.ColumnHeader7, Me.ColumnHeader8, Me.ColumnHeader9, Me.ColumnHeader10, Me.ColumnHeader11})
+        Me.lvTLDL.FullRowSelect = True
+        Me.lvTLDL.GridLines = True
+        Me.lvTLDL.Location = New System.Drawing.Point(6, 6)
+        Me.lvTLDL.Name = "lvTLDL"
+        Me.lvTLDL.Size = New System.Drawing.Size(804, 486)
+        Me.lvTLDL.TabIndex = 1
+        Me.lvTLDL.UseCompatibleStateImageBehavior = False
+        Me.lvTLDL.View = System.Windows.Forms.View.Details
         '
-        'colFileName
+        'ColumnHeader6
         '
-        Me.colFileName.HeaderText = "Filename"
-        Me.colFileName.Name = "colFileName"
-        Me.colFileName.Width = 74
+        Me.ColumnHeader6.Text = "Filename"
         '
-        'colFileSize
+        'ColumnHeader7
         '
-        Me.colFileSize.HeaderText = "Filesize"
-        Me.colFileSize.Name = "colFileSize"
-        Me.colFileSize.Width = 66
+        Me.ColumnHeader7.Text = "Filesize"
         '
-        'colFinished
+        'ColumnHeader8
         '
-        Me.colFinished.HeaderText = "Finished"
-        Me.colFinished.Name = "colFinished"
-        Me.colFinished.Width = 71
+        Me.ColumnHeader8.Text = "Finished"
         '
-        'colRate
+        'ColumnHeader9
         '
-        Me.colRate.HeaderText = "Rate (KiB/s)"
-        Me.colRate.Name = "colRate"
-        Me.colRate.ReadOnly = True
-        Me.colRate.Width = 90
+        Me.ColumnHeader9.Text = "Rate"
         '
-        'colState
+        'ColumnHeader10
         '
-        Me.colState.HeaderText = "State"
-        Me.colState.Name = "colState"
-        Me.colState.Width = 57
+        Me.ColumnHeader10.Text = "State"
         '
-        'colHash
+        'ColumnHeader11
         '
-        Me.colHash.HeaderText = "Hash"
-        Me.colHash.Name = "colHash"
-        Me.colHash.Width = 57
+        Me.ColumnHeader11.Text = "Hash"
         '
         'TabPage3
         '
-        Me.TabPage3.Controls.Add(Me.dgvUploads)
+        Me.TabPage3.Controls.Add(Me.lvTLUL)
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Size = New System.Drawing.Size(816, 498)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "FileUploads"
         Me.TabPage3.UseVisualStyleBackColor = True
-        '
-        'dgvUploads
-        '
-        Me.dgvUploads.AllowUserToAddRows = False
-        Me.dgvUploads.AllowUserToDeleteRows = False
-        Me.dgvUploads.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
-        Me.dgvUploads.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvUploads.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6})
-        Me.dgvUploads.Location = New System.Drawing.Point(3, 3)
-        Me.dgvUploads.MultiSelect = False
-        Me.dgvUploads.Name = "dgvUploads"
-        Me.dgvUploads.Size = New System.Drawing.Size(810, 450)
-        Me.dgvUploads.TabIndex = 1
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.HeaderText = "Filename"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.Width = 74
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Filesize"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.Width = 66
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        Me.DataGridViewTextBoxColumn3.HeaderText = "Finished"
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        Me.DataGridViewTextBoxColumn3.Width = 71
-        '
-        'DataGridViewTextBoxColumn4
-        '
-        Me.DataGridViewTextBoxColumn4.HeaderText = "Rate (KiB/s)"
-        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
-        Me.DataGridViewTextBoxColumn4.ReadOnly = True
-        Me.DataGridViewTextBoxColumn4.Width = 90
-        '
-        'DataGridViewTextBoxColumn5
-        '
-        Me.DataGridViewTextBoxColumn5.HeaderText = "State"
-        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
-        Me.DataGridViewTextBoxColumn5.Width = 57
-        '
-        'DataGridViewTextBoxColumn6
-        '
-        Me.DataGridViewTextBoxColumn6.HeaderText = "Hash"
-        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
-        Me.DataGridViewTextBoxColumn6.Width = 57
         '
         'tmrTick
         '
@@ -559,7 +483,7 @@ Partial Class frmMain
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tslblSysS, Me.tslblTLDL, Me.tslblTLUL})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 547)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 585)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(848, 22)
         Me.StatusStrip1.TabIndex = 1
@@ -583,11 +507,57 @@ Partial Class frmMain
         Me.tslblTLUL.Size = New System.Drawing.Size(34, 17)
         Me.tslblTLUL.Text = "TLUL"
         '
+        'lvTLUL
+        '
+        Me.lvTLUL.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader12, Me.ColumnHeader13, Me.ColumnHeader14, Me.ColumnHeader15, Me.ColumnHeader16, Me.ColumnHeader17})
+        Me.lvTLUL.FullRowSelect = True
+        Me.lvTLUL.GridLines = True
+        Me.lvTLUL.Location = New System.Drawing.Point(6, 6)
+        Me.lvTLUL.Name = "lvTLUL"
+        Me.lvTLUL.Size = New System.Drawing.Size(804, 486)
+        Me.lvTLUL.TabIndex = 2
+        Me.lvTLUL.UseCompatibleStateImageBehavior = False
+        Me.lvTLUL.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader12
+        '
+        Me.ColumnHeader12.Text = "Filename"
+        '
+        'ColumnHeader13
+        '
+        Me.ColumnHeader13.Text = "Filesize"
+        '
+        'ColumnHeader14
+        '
+        Me.ColumnHeader14.Text = "Finished"
+        '
+        'ColumnHeader15
+        '
+        Me.ColumnHeader15.Text = "Rate"
+        '
+        'ColumnHeader16
+        '
+        Me.ColumnHeader16.Text = "State"
+        '
+        'ColumnHeader17
+        '
+        Me.ColumnHeader17.Text = "Hash"
+        '
+        'cmdTest
+        '
+        Me.cmdTest.Location = New System.Drawing.Point(592, 538)
+        Me.cmdTest.Name = "cmdTest"
+        Me.cmdTest.Size = New System.Drawing.Size(75, 23)
+        Me.cmdTest.TabIndex = 2
+        Me.cmdTest.Text = "Test"
+        Me.cmdTest.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(848, 569)
+        Me.ClientSize = New System.Drawing.Size(848, 607)
+        Me.Controls.Add(Me.cmdTest)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.tcMain)
         Me.Name = "frmMain"
@@ -601,9 +571,7 @@ Partial Class frmMain
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
-        CType(Me.dgvDownloads, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
-        CType(Me.dgvUploads, System.ComponentModel.ISupportInitialize).EndInit()
         Me.StatusStrip1.ResumeLayout(False)
         Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
@@ -614,7 +582,6 @@ Partial Class frmMain
     Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
     Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
     Friend WithEvents tmrTick As System.Windows.Forms.Timer
-    Friend WithEvents cmdTest As System.Windows.Forms.Button
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents lblStatus As System.Windows.Forms.Label
     Friend WithEvents cmdConnect As System.Windows.Forms.Button
@@ -642,13 +609,6 @@ Partial Class frmMain
     Friend WithEvents ColumnHeader3 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader4 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader5 As System.Windows.Forms.ColumnHeader
-    Friend WithEvents dgvDownloads As System.Windows.Forms.DataGridView
-    Friend WithEvents colFileName As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colFileSize As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colFinished As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colRate As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colState As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents colHash As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
     Friend WithEvents lblULCaches As System.Windows.Forms.Label
     Friend WithEvents lblDLCache As System.Windows.Forms.Label
@@ -659,17 +619,25 @@ Partial Class frmMain
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
-    Friend WithEvents dgvUploads As System.Windows.Forms.DataGridView
-    Friend WithEvents DataGridViewTextBoxColumn1 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn2 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn3 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn4 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn5 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn6 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents chkAutoLogin As System.Windows.Forms.CheckBox
     Friend WithEvents StatusStrip1 As System.Windows.Forms.StatusStrip
     Friend WithEvents tslblSysS As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents tslblTLDL As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents tslblTLUL As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents lvTLDL As System.Windows.Forms.ListView
+    Friend WithEvents ColumnHeader6 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader7 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader8 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader9 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader10 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader11 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents lvTLUL As System.Windows.Forms.ListView
+    Friend WithEvents ColumnHeader12 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader13 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader14 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader15 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader16 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents ColumnHeader17 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents cmdTest As System.Windows.Forms.Button
 
 End Class
